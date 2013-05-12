@@ -16,6 +16,14 @@ do the following:
 
 include XML document in run-folder
 
+I have included this now so all you need to enter is a string to your ableton file
+
+	import loive
+
+	lp = loive.Loive('bitwonders.als')
+
+performs copy and gzip, parses the data
+
 NOTE: I think this only works with newer versions of ableton live 8 and above
 
 Dependencies
