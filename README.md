@@ -38,7 +38,7 @@ Example:
 
 	import loive
 
-	lp = loive.Loive('18lagid.als')
+	lp = loive.Loive('lojibeat.als')
 	lp.live_version()
 
 
