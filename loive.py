@@ -3,7 +3,7 @@
 import xml.etree.ElementTree as ET
 import pprint
 import shutil
-import os
+import os.path, time
 import gzip
 
 from subprocess import call
@@ -22,6 +22,10 @@ class Loive:
 		
 		#Store full path:
 		self.full_path = os.getcwd()
+
+		#zipped
+
+		self.zipped = self.full_path + '/' + cmands
 
 		strip_string = cmands.split('.', 1)[0]
 	
@@ -48,6 +52,12 @@ class Loive:
 		init(autoreset=True)
 	
 	def run_query(self):		
+		#Track listing
+
+		self.track_query = self.root.findall(".//LiveSet//Tracks/")
+		self.track_count = len(self.track_query)
+	
+
 		#Local plugin query
 		#Fetches all local Devices, Ableton effects, non vst-plugins
 		self.local_xml_query = ".//LiveSet//Tracks//DeviceChain//Devices[1]/*"
@@ -61,7 +71,7 @@ class Loive:
 		#We need special query for Au plugins
 		self.AU_query = ".//LiveSet//Tracks//DeviceChain//Devices//AuPluginDevice//PluginDesc//AuPluginInfo/Name"
 		self.AuPlugs = self.root.findall(self.AU_query)
-
+	
 
 	def efx_local(self):
 		
@@ -123,13 +133,38 @@ class Loive:
 	def live_version(self):
 		#returns verison number in string format
 
-		minorVersion = '[Ableton live minor version: ' + self.root.attrib['MinorVersion']
+		minorVersion = '[Ableton live minor version: ' + self.root.attrib['MinorVersion'] + ']'
 
 		if len(self.root.attrib) == 2:
-			print(Style.BRIGHT + Fore.MAGENTA + minorVersion + ']')
+			return minorVersion
 
 		else:
-			print(Style.BRIGHT + Fore.MAGENTA + '[' + self.root.attrib['Creator'] + ']')
+			creator_str = self.root.attrib['Creator']
+			return creator_str
+		
+
+	def print_summary(self):
+	
+		print '\n'
+	
+		print 'Name : ' + self.args
+		print 'Version : ' + self.live_version()
+
+		print '\n'
+
+		print( 'Number of tracks : ' + str(self.track_count))
+
+		print '\n'
+
+		self.getPluginInfo()
+		
+		print '\n'			
+
+		print "last modified: %s" % time.ctime(os.path.getmtime(self.zipped))
+		print "created: %s" % time.ctime(os.path.getctime(self.zipped))
+		
+
+		
 		
 		
 		
