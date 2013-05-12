@@ -5,6 +5,15 @@ Ableton live project parser
 
 This is all on very early development stage:
 
+Following Michael Garriss great blog post do the following:
+
+	$ cp example.als example.gz
+	$ gunzip example.gz
+	$ file	example
+	example: XML  document text
+
+include XML document in run-folder
+
 Dependencies
 ===========
 
