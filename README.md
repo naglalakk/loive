@@ -84,7 +84,7 @@ Tested with Ableton live 8.1.3 and live 9.0.4
 
 screenshot:
 
-	![Alt text](live9.jpg "Ableton live 9.0.4")
+![Alt text](live9.jpg "Ableton live 9.0.4")
 
 
 
