@@ -7,6 +7,7 @@ import os.path, time
 import gzip
 
 from subprocess import call
+from datetime import datetime
 
 from colorama import init
 from colorama import Fore,Back,Style
@@ -19,6 +20,7 @@ class Loive:
 		#Temporary, this means all string must match
 		#find a handler for this later,
 		self.args = cmands
+		self.full_path = None
 		
 		#Store full path:
 		self.hasfp = fpath
@@ -27,25 +29,9 @@ class Loive:
 			self.full_path = cmands
 		else:
 			self.full_path = os.getcwd()
-
-		#zipped
-
-		self.zipped = self.full_path + '/' + cmands
-
-		self.strip_string = cmands.split('.', 1)[0]
 	
-		conversionString = self.strip_string + '.gz'
-
-		#XML-Conversion
-		if fpath:
-			shutil.copyfile(self.full_path, conversionString)
-			gzip_path = conversionString
-		else:
-			shutil.copyfile(self.full_path + '/' + cmands, conversionString)
-			gzip_path = self.full_path + '/' + self.strip_string + '.gz'
-	
-	
-		call(["gunzip", gzip_path])
+		self.gunzip_file()
+		self.setTimeDate()
 		
 		self.tree = ET.parse(self.strip_string)
 		self.root = self.tree.getroot()
@@ -59,7 +45,42 @@ class Loive:
 
 		#Initialize colors
 		init(autoreset=True)
+
+	def gunzip_file(self):
+		#zipped
+		self.zipped = self.full_path + '/' + self.args
+
+		self.strip_string = self.args.split('.', 1)[0]
 	
+		conversionString = self.strip_string + '.gz'
+
+		#XML-Conversion
+		if self.hasfp:
+			shutil.copyfile(self.full_path, conversionString)
+			gzip_path = conversionString
+		else:
+			shutil.copyfile(self.full_path + '/' + self.args, conversionString)
+			gzip_path = self.full_path + '/' + self.strip_string + '.gz'
+	
+	
+		call(["gunzip", gzip_path])
+
+		
+	def setTimeDate(self):
+		if self.hasfp:
+			modifiedTime = os.path.getmtime(self.args)
+			self.mod_time   = datetime.fromtimestamp(modifiedTime).strftime("%d %b %Y %H:%M:%S")
+			createTime = os.path.getctime(self.args)
+			self.create_time = datetime.fromtimestamp(createTime).strftime("%d %b %Y %H:%M:%S")
+
+		else:
+			self.zipped = self.full_path + '/' + self.args
+			modifiedTime = os.path.getmtime(self.zipped)
+			self.mod_time   = datetime.fromtimestamp(modifiedTime).strftime("%d %b %Y %H:%M:%S")
+			createTime = os.path.getctime(self.zipped)
+			self.create_time = datetime.fromtimestamp(createTime).strftime("%d %b %Y %H:%M:%S")
+
+		
 	def run_query(self):		
 		
 		#Track listing
@@ -186,12 +207,8 @@ class Loive:
 		
 		print '\n'			
 
-		if self.hasfp:
-			print "last modified: %s" % time.ctime(os.path.getmtime(self.full_path))
-			print "created: %s" % time.ctime(os.path.getctime(self.full_path))
-		else:
-			print "last modified: %s" % time.ctime(os.path.getmtime(self.zipped))
-			print "created: %s" % time.ctime(os.path.getctime(self.zipped))
+		print "last modified: %s" % self.mod_time
+		print "created: %s" % 		self.create_time
 		
 
 		
