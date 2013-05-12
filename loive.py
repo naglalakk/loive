@@ -2,6 +2,11 @@
 
 import xml.etree.ElementTree as ET
 import pprint
+import shutil
+import os
+import gzip
+
+from subprocess import call
 
 from colorama import init
 from colorama import Fore,Back,Style
@@ -14,7 +19,22 @@ class Loive:
 		#Temporary, this means all string must match
 		#find a handler for this later,
 		self.args = cmands
-		self.tree = ET.parse(self.args)
+		
+		#Store full path:
+		self.full_path = os.getcwd()
+
+		strip_string = cmands.split('.', 1)[0]
+	
+		conversionString = strip_string + '.gz'
+
+		#XML-Conversion
+		shutil.copyfile(self.full_path + '/' + cmands, conversionString)
+	
+		gzip_path = self.full_path + '/' + strip_string + '.gz'
+	
+		call(["gunzip", gzip_path])
+		
+		self.tree = ET.parse(strip_string)
 		self.root = self.tree.getroot()
 
 		#Perform queries at initialization
@@ -89,22 +109,24 @@ class Loive:
 		#Prints it out
 
 		print(Fore.RED + 'Ableton Effects: \n')
-		pp = pprint.PrettyPrinter(indent=4)
-		pp.pprint(self.clean_local_list)
+		pl = pprint.PrettyPrinter(indent=4)
+		pl.pprint(self.clean_local_list)
 
 		print '\n'
 		
 		print(Fore.RED + 'Global Effects/VST: \n')
-		pp.pprint(self.global_ext_list)
+		pe = pprint.PrettyPrinter(indent=4)
+		pe.pprint(self.global_ext_list)
 
+		print '\n'
 
 	def live_version(self):
 		#returns verison number in string format
 
-		minorVersion = '[Ableton live minor version: '
+		minorVersion = '[Ableton live minor version: ' + self.root.attrib['MinorVersion']
 
 		if len(self.root.attrib) == 2:
-			print(Style.BRIGHT + Fore.MAGENTA + minorVersion + self.root.attrib['MinorVersion'] + ']')
+			print(Style.BRIGHT + Fore.MAGENTA + minorVersion + ']')
 
 		else:
 			print(Style.BRIGHT + Fore.MAGENTA + '[' + self.root.attrib['Creator'] + ']')
