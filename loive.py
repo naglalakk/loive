@@ -83,6 +83,10 @@ class Loive:
 		
 	def run_query(self):		
 		
+		self.manufact_container 	= {}
+		self.manu_list 				= []
+		self.au_list				= []
+
 		#Track listing
 
 		self.track_query = self.root.findall(".//LiveSet//Tracks/")
@@ -105,9 +109,22 @@ class Loive:
 	
 
 		#Might become useful
-		self.manufacturers = self.root.findall(".//LiveSet//Tracks//DeviceChain//Devices//AuPluginDevice//PluginDesc//AuPluginInfo/Manufacturer")
+		self.manuf = self.root.findall(".//LiveSet//Tracks//DeviceChain//Devices//AuPluginDevice//PluginDesc//AuPluginInfo/Manufacturer")
 
+		for m in self.manuf:
+			self.manu_list.append(m.attrib['Value'])
+	
+		for a in self.AuPlugs:
+			self.au_list.append(a.attrib['Value'])
 
+		#Stores a dict with manufacturers and name value filled
+		self.manufacturers = dict(zip(self.au_list, self.manu_list))
+	
+	def list_manufacturers(self):
+		ppr = pprint.PrettyPrinter(indent=1, width=20)
+		
+		ppr.pprint(self.manufacturers)
+	
 	def efx_local(self):
 		
 		self.list_values 	  = []
