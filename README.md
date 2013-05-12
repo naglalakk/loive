@@ -5,7 +5,9 @@ Ableton live project parser
 
 This is all on very early development stage:
 
-Following Michael Garriss great blog post do the following:
+Following Michael Garriss great blog post ( http://crooked-hideout.blogspot.com/ ) 
+
+do the following:
 
 	$ cp example.als example.gz
 	$ gunzip example.gz
