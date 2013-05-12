@@ -16,6 +16,8 @@ do the following:
 
 include XML document in run-folder
 
+NOTE: I think this only works with newer versions of ableton live 8 and above
+
 Dependencies
 ===========
 
