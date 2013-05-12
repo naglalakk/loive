@@ -43,6 +43,12 @@ Example:
 
 Prints the status of the file, tracks, vst plugins etc..
 
+You can run full paths to ableton projects, for now you have to indicate this with:
+
+	lp = loive.Loive('/Users/enki/Desktop/Music/nytband/11lagid/11lagid_Project/11lagid.als', 1)
+
+---
+
 	lp.live_version()
 
 
