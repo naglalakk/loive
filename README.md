@@ -39,6 +39,10 @@ Example:
 	import loive
 
 	lp = loive.Loive('lojibeat.als')
+	lp.print_summary()
+
+Prints the status of the file, tracks, vst plugins etc..
+
 	lp.live_version()
 
 
