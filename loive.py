@@ -156,7 +156,16 @@ class Loive:
 	
 		print '\n'
 	
-		print 'Name : ' + self.args
+		if self.hasfp:
+			nameis = os.path.basename(self.args)
+	
+			print 'Name : ' + nameis
+			print 'Full path : ' + self.args
+
+		else:
+			print 'Name : ' + self.args
+			print 'Full path : ' + self.full_path
+		
 		print 'Version : ' + self.live_version()
 
 		print '\n'
