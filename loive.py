@@ -15,30 +15,39 @@ from colorama import Fore,Back,Style
 #always goes smoothe...
 class Loive:
 
-	def __init__(self, cmands):
+	def __init__(self, cmands, fpath=False):
 		#Temporary, this means all string must match
 		#find a handler for this later,
 		self.args = cmands
 		
 		#Store full path:
-		self.full_path = os.getcwd()
+		self.hasfp = fpath
+
+		if fpath:
+			self.full_path = cmands
+		else:
+			self.full_path = os.getcwd()
 
 		#zipped
 
 		self.zipped = self.full_path + '/' + cmands
 
-		strip_string = cmands.split('.', 1)[0]
+		self.strip_string = cmands.split('.', 1)[0]
 	
-		conversionString = strip_string + '.gz'
+		conversionString = self.strip_string + '.gz'
 
 		#XML-Conversion
-		shutil.copyfile(self.full_path + '/' + cmands, conversionString)
+		if fpath:
+			shutil.copyfile(self.full_path, conversionString)
+			gzip_path = conversionString
+		else:
+			shutil.copyfile(self.full_path + '/' + cmands, conversionString)
+			gzip_path = self.full_path + '/' + self.strip_string + '.gz'
 	
-		gzip_path = self.full_path + '/' + strip_string + '.gz'
 	
 		call(["gunzip", gzip_path])
 		
-		self.tree = ET.parse(strip_string)
+		self.tree = ET.parse(self.strip_string)
 		self.root = self.tree.getroot()
 
 		#Perform queries at initialization
@@ -160,8 +169,12 @@ class Loive:
 		
 		print '\n'			
 
-		print "last modified: %s" % time.ctime(os.path.getmtime(self.zipped))
-		print "created: %s" % time.ctime(os.path.getctime(self.zipped))
+		if self.hasfp:
+			print "last modified: %s" % time.ctime(os.path.getmtime(self.full_path))
+			print "created: %s" % time.ctime(os.path.getctime(self.full_path))
+		else:
+			print "last modified: %s" % time.ctime(os.path.getmtime(self.zipped))
+			print "created: %s" % time.ctime(os.path.getctime(self.zipped))
 		
 
 		
