@@ -20,7 +20,7 @@ I have included this now so all you need to enter is a string to your ableton fi
 
 	import loive
 
-	lp = loive.Loive('bitwonders.als')
+	lp = loive.Loive('20lagid.als')
 
 performs copy and gzip, parses the data
 
