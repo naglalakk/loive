@@ -61,6 +61,7 @@ class Loive:
 		init(autoreset=True)
 	
 	def run_query(self):		
+		
 		#Track listing
 
 		self.track_query = self.root.findall(".//LiveSet//Tracks/")
@@ -81,6 +82,10 @@ class Loive:
 		self.AU_query = ".//LiveSet//Tracks//DeviceChain//Devices//AuPluginDevice//PluginDesc//AuPluginInfo/Name"
 		self.AuPlugs = self.root.findall(self.AU_query)
 	
+
+		#Might become useful
+		self.manufacturers = self.root.findall(".//LiveSet//Tracks//DeviceChain//Devices//AuPluginDevice//PluginDesc//AuPluginInfo/Manufacturer")
+
 
 	def efx_local(self):
 		
@@ -128,13 +133,13 @@ class Loive:
 		#Prints it out
 
 		print(Fore.RED + 'Ableton Effects: \n')
-		pl = pprint.PrettyPrinter(indent=4)
+		pl = pprint.PrettyPrinter(indent=6)
 		pl.pprint(self.clean_local_list)
 
 		print '\n'
 		
 		print(Fore.RED + 'Global Effects/VST: \n')
-		pe = pprint.PrettyPrinter(indent=4)
+		pe = pprint.PrettyPrinter(indent=6)
 		pe.pprint(self.global_ext_list)
 
 		print '\n'
@@ -163,8 +168,11 @@ class Loive:
 			print 'Full path : ' + self.args
 
 		else:
-			print 'Name : ' + self.args
-			print 'Full path : ' + self.full_path
+			fp = self.full_path + '/' + self.args
+			nameis = os.path.basename(fp)
+
+			print 'Name : ' + nameis
+			print 'Full path : ' + fp
 		
 		print 'Version : ' + self.live_version()
 
