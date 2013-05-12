@@ -44,8 +44,7 @@ Example:
 
 returns
 		
-	[Ableton live minor version: 8.1_223]
-
+	[Ableton Live 8.1.3]
 
 Get Plugin info:
 
