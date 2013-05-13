@@ -111,8 +111,3 @@ screenshot:
 ![Alt text](live9.jpg "Ableton live 9.0.4")
 
 
-
-Todo:
-	
-	Add plugin elements as dictionaries
-	Automate path/execute properties
