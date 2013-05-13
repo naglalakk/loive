@@ -67,9 +67,10 @@ Class examples:
 
 Prints the status of the file, tracks, vst plugins etc..
 
-You can run full paths to ableton projects, for now you have to indicate this with:
+You can run full paths to ableton project as well:
 
-	lp = loive.Loive('/Users/enki/Desktop/Music/nytband/11lagid/11lagid_Project/11lagid.als', 1)
+	lp = loive.Loive('/Users/someuser/path/to/ableton-set.als')
+
 
 ---
 
