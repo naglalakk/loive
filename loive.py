@@ -193,7 +193,10 @@ class Loive:
 		else:
 			creator_str = self.root.attrib['Creator']
 			return creator_str
-		
+
+	def print_live_version(self):
+		vers = self.live_version()
+		print(Fore.CYAN + vers)	
 
 	def print_summary(self):
 	
