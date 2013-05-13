@@ -5,7 +5,8 @@ import getopt
 import pprint
 
 def cmdLineHelp():
-	help_list = {'-h'			 : 'List all commands',
+	help_list = {
+				 '-h'			 : 'List all commands',
 				 '-q'			 : 'Exit shell',
 				 'efx_local'	 : 'Lists all local devices',
 				 'efx_global'	 : 'Lists all global devices / VST,AU plugins' ,
