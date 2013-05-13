@@ -111,6 +111,8 @@ class Loive:
 	
 	def efx_local(self):
 		
+		#Follow Au or Ableton devices and are useless
+		default_a = ['AuPluginDevice', 'PluginDevice']
 		self.list_values 	  = []
 		self.clean_local_list = []
 		
@@ -118,8 +120,14 @@ class Loive:
 		for e in self.local_elems:
 			self.list_values.append(e.tag)
 	
-		#Remove duplicates
-		self.clean_local_list = list(set(self.list_values))
+		utilStr = list(set(self.list_values))
+	
+		for i in utilStr:
+			if i in default_a:
+				utilStr.remove(i)		
+
+
+		self.clean_local_list = utilStr
 
 		return self.clean_local_list
 	
@@ -129,9 +137,6 @@ class Loive:
 
 	def efx_global(self):
 		
-		#Follow Au or Ableton devices and are useless
-		default_a = 'AuPluginDevice'
-		default_b = 'PluginDevice'
 
 		#Setup containers
 		self.vst_list 		 = []
