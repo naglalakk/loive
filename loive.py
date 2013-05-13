@@ -120,8 +120,12 @@ class Loive:
 	
 		#Remove duplicates
 		self.clean_local_list = list(set(self.list_values))
-		
+
 		return self.clean_local_list
+	
+	def efx_local_print(self):
+		ppr = pprint.PrettyPrinter(indent=6)
+		ppr.pprint(self.clean_local_list)
 
 	def efx_global(self):
 		
@@ -147,8 +151,13 @@ class Loive:
 
 		#construct one final list
 		self.global_ext_list = self.clean_vst_list + self.clean_au_list
-
+		
 		return self.global_ext_list
+
+	def efx_global_print(self):
+		ppr = pprint.PrettyPrinter(indent=6)
+		ppr.pprint(self.global_ext_list)
+
 
 	def getPluginInfo(self):
 		#Very simple, fetches local/global plugin info

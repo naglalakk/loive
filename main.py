@@ -24,8 +24,8 @@ def main(argv):
 	
 	command_args = { '-h'		  	 : 'cmdLineHelp()',
 					 '-q'		  	 : 'exit()',
-					 'efx_local'   	 : 'efx_local()',
-					 'efx_global' 	 : 'efx_global()',
+					 'efx_local'   	 : 'efx_local_print()',
+					 'efx_global' 	 : 'efx_global_print()',
 					 'pluginInfo'	 : 'getPluginInfo()',
 					 'version'	  	 : 'print_live_version()',
 					 'print-summary' : 'print_summary()',
