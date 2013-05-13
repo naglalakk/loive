@@ -16,19 +16,17 @@ from colorama import Fore,Back,Style
 #always goes smoothe...
 class Loive:
 
-	def __init__(self, cmands, fpath=False):
+	def __init__(self, cmands):
 		#Temporary, this means all string must match
 		#find a handler for this later,
 		self.args = cmands
-		self.full_path = None
 		
-		#Store full path:
-		self.hasfp = fpath
-
-		if fpath:
+		#determine weither full path is being used or local directory
+		if self.args.startswith('~') | self.args.startswith('/'):
 			self.full_path = cmands
 		else:
-			self.full_path = os.getcwd()
+			self.full_path = os.getcwd() + '/' + cmands
+	
 	
 		self.gunzip_file()
 		self.setTimeDate()
@@ -47,38 +45,24 @@ class Loive:
 		init(autoreset=True)
 
 	def gunzip_file(self):
-		#zipped
-		self.zipped = self.full_path + '/' + self.args
 
 		self.strip_string = self.args.split('.', 1)[0]
 	
 		conversionString = self.strip_string + '.gz'
 
 		#XML-Conversion
-		if self.hasfp:
-			shutil.copyfile(self.full_path, conversionString)
-			gzip_path = conversionString
-		else:
-			shutil.copyfile(self.full_path + '/' + self.args, conversionString)
-			gzip_path = self.full_path + '/' + self.strip_string + '.gz'
-	
+		shutil.copyfile(self.full_path, conversionString)
+		gzip_path = conversionString
 	
 		call(["gunzip", gzip_path])
 
 		
 	def setTimeDate(self):
-		if self.hasfp:
-			modifiedTime = os.path.getmtime(self.args)
+			modifiedTime = os.path.getmtime(self.full_path)
 			self.mod_time   = datetime.fromtimestamp(modifiedTime).strftime("%d %b %Y %H:%M:%S")
-			createTime = os.path.getctime(self.args)
+			createTime = os.path.getctime(self.full_path)
 			self.create_time = datetime.fromtimestamp(createTime).strftime("%d %b %Y %H:%M:%S")
 
-		else:
-			self.zipped = self.full_path + '/' + self.args
-			modifiedTime = os.path.getmtime(self.zipped)
-			self.mod_time   = datetime.fromtimestamp(modifiedTime).strftime("%d %b %Y %H:%M:%S")
-			createTime = os.path.getctime(self.zipped)
-			self.create_time = datetime.fromtimestamp(createTime).strftime("%d %b %Y %H:%M:%S")
 
 		
 	def run_query(self):		
@@ -202,18 +186,10 @@ class Loive:
 	
 		print '\n'
 	
-		if self.hasfp:
-			nameis = os.path.basename(self.args)
+		nameis = os.path.basename(self.full_path)
 	
-			print 'Name : ' + nameis
-			print 'Full path : ' + self.args
-
-		else:
-			fp = self.full_path + '/' + self.args
-			nameis = os.path.basename(fp)
-
-			print 'Name : ' + nameis
-			print 'Full path : ' + fp
+		print 'Name : ' + nameis
+		print 'Full path : ' + self.full_path
 		
 		print 'Version : ' + self.live_version()
 

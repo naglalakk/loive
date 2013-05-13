@@ -6,13 +6,13 @@ import pprint
 
 def cmdLineHelp():
 	help_list = {'-h'			 : 'List all commands',
-				 '-q'			 : 'Exit shell',
+				 '-q'		 : 'Exit shell',
 				 'efx_local'     : 'Lists all local devices',
 				 'efx_global' 	 : 'Lists all global devices / VST,AU plugins' ,
 				 'pluginInfo'	 : 'Display all information about local/global plugin devices',
-				 'version'		 : 'Display project version',
+				 'version'	 : 'Display project version',
 				 'print-summary' : 'Prints summary of ableton-project, tracks, plugins etc..' ,
-				 'load'			 : 'Loads new als file',
+				 'load'		 : 'Loads new als file',
 				 'manufacturers' : 'Lists manufacturers of items that declare them' } 
 	
 
