@@ -33,7 +33,7 @@ def main(argv):
 					 'manufacturers' : 'list_manufacturers()'} 
 
 	if len(argv) < 2:
-		sys.stderr.write("Usage: python loive.py [-File] \n")
+		sys.stderr.write("Usage: python main.py [-File] \n")
 		return 1
 
 	filename = argv[1]
